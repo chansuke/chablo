@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="search" type="application/opensearchdescription+xml" title="chansuke.net" href="/opensearch.xml">
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml">
+  <meta property="description" content="{{ description }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:title" content="{{ title }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <p>
+        <a href="/">chansuke.net</a>
+      </p>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+</body>
+</html>

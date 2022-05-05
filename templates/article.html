@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<article>
+  <header>
+    <time datetime="{{ date }}">{{ date }}</time>
+    <h1>{{ title }}</h1>
+  </header>
+  <div>
+    {{ body|safe }}
+  </div>
+</article>
+{% endblock content %}
