@@ -1,11 +1,11 @@
 name: Deploy to Firebase Hosting on merge
-'on':
-  pull_request_review:
-    types: [submitted]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_deploy:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
