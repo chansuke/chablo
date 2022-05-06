@@ -6,7 +6,7 @@ use anyhow::Result;
 use pulldown_cmark::{html, Options, Parser};
 
 use crate::errors::ChabloError;
-use crate::models::{create_current_datetime, Article, HtmlBody};
+use crate::models::{curent_datetime, Article, HtmlBody};
 
 pub fn parse(path: PathBuf) -> Result<Article, ChabloError> {
     // Extract the content of a markdown file
@@ -14,15 +14,17 @@ pub fn parse(path: PathBuf) -> Result<Article, ChabloError> {
     let title = extract_title(&content)?;
     let body = extract_body(&content)?;
     let html_body = convert_md_to_html(body)?;
-    let current_date = create_current_datetime();
+    let current_date = curent_datetime();
     let date_time = current_date.format("%Y-%m-%d").to_string();
-    let id = format!("{}_{}.html", date_time, title);
+    let id = format!("{}_{}", date_time, title);
+    let path = format!("{}{}", &title, ".html");
 
     let article = Article {
         id,
         title: title.to_string(),
         body: html_body,
         date: current_date,
+        path,
     };
 
     Ok(article)

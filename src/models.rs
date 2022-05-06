@@ -27,13 +27,14 @@ pub struct Article {
     pub title: String,
     pub body: HtmlBody,
     pub date: NaiveDate,
+    pub path: String,
 }
 
 pub struct TopPage {
     pub articles: Vec<Article>,
 }
 
-pub fn create_current_datetime() -> NaiveDate {
+pub fn curent_datetime() -> NaiveDate {
     let local_time = Local::now().naive_local();
     let year = local_time.date().year();
     let month = local_time.date().month();

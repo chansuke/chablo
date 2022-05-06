@@ -28,7 +28,7 @@ pub fn build_articles() -> Result<(), ChabloError> {
     let articles = collect_articles()?;
 
     for article in articles {
-        let path = "public/".to_string() + &article.id + ".html";
+        let path = "public/".to_string() + &article.title + ".html";
         let template = article.generate()?;
         write(&template, &path)?;
     }

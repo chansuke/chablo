@@ -2,8 +2,7 @@ use anyhow::Result;
 use askama::Template;
 
 use crate::models::{
-    create_current_datetime, Article, ArticleTemplate, TopPage, TopPageTemplate, DESCRIPTION,
-    SUB_TITLE,
+    curent_datetime, Article, ArticleTemplate, TopPage, TopPageTemplate, DESCRIPTION, SUB_TITLE,
 };
 
 pub trait Generator<T> {
@@ -12,7 +11,7 @@ pub trait Generator<T> {
 
 impl Generator<Article> for Article {
     fn generate(self) -> Result<String, askama::Error> {
-        let current_date = create_current_datetime();
+        let current_date = curent_datetime();
 
         let result = ArticleTemplate {
             title: &self.title,
@@ -44,14 +43,16 @@ mod tests {
 
     #[test]
     fn test_generate_article_ok() {
-        let date = create_current_datetime();
+        let date = curent_datetime();
         let content = "This is a test".to_string();
+        let path = "filepath.html".to_string();
 
         let article = Article {
             id: "id".to_string(),
             title: "This is an article".to_string(),
             body: HtmlBody(content),
             date,
+            path,
         };
 
         let result = article.generate();
@@ -61,13 +62,15 @@ mod tests {
 
     #[test]
     fn test_generate_toppage_ok() {
-        let date = create_current_datetime();
+        let date = curent_datetime();
         let content = "This is a test".to_string();
+        let path = "filepath.html".to_string();
         let article = Article {
             id: "test".to_string(),
             title: "title".to_string(),
             body: HtmlBody(content),
             date,
+            path,
         };
         let articles: Vec<Article> = vec![article];
 
