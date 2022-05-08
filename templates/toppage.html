@@ -7,7 +7,7 @@
   <ol class="articles">
     {% for article in articles %}
       <li>
-        <!-- <time datetime="{{ article.date }}">{{ article.date }}</time> -->
+        <time datetime="{{ article.date }}">{{ article.date }}</time>
         <a href="{{ article.path }}">{{ article.title }}</a>
       </li>
     {% endfor %}

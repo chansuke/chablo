@@ -1,9 +1,7 @@
 use anyhow::Result;
 use askama::Template;
 
-use crate::models::{
-    curent_datetime, Article, ArticleTemplate, TopPage, TopPageTemplate, DESCRIPTION, SUB_TITLE,
-};
+use crate::models::{Article, ArticleTemplate, TopPage, TopPageTemplate, DESCRIPTION, SUB_TITLE};
 
 pub trait Generator<T> {
     fn generate(self) -> Result<String, askama::Error>;
@@ -11,12 +9,10 @@ pub trait Generator<T> {
 
 impl Generator<Article> for Article {
     fn generate(self) -> Result<String, askama::Error> {
-        let current_date = curent_datetime();
-
         let result = ArticleTemplate {
             title: &self.title,
             body: self.body,
-            date: current_date,
+            date: self.date,
             description: DESCRIPTION,
         };
 
