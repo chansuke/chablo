@@ -47,23 +47,19 @@ pub fn curent_datetime() -> NaiveDate {
 pub fn created_datetime(path: PathBuf) -> Option<NaiveDate> {
     let path_str = path.into_os_string().into_string().unwrap_or_default();
 
-    if let Some(date) = parse_time(&path_str) {
-        Some(NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
-    } else {
-        None
-    }
+    parse_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
 }
 
 fn parse_time(path_str: &str) -> Option<Vec<i32>> {
     let re_str = r#"\d{1,}"#;
     let re = Regex::new(re_str).unwrap();
     // Extract year, month, date
-    let year = re
+    let year_month_day = re
         .captures_iter(path_str)
         .map(|cap| cap.get(0).unwrap().as_str().parse::<i32>().unwrap())
         .collect();
 
-    Some(year)
+    Some(year_month_day)
 }
 
 #[derive(Template)]
