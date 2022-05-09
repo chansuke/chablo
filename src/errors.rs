@@ -11,4 +11,6 @@ pub enum ChabloError {
     GlobError(#[from] glob::PatternError),
     #[error("Failed to match the pattern")]
     MatchError,
+    #[error("Failed to parse Int: {0}")]
+    ParseIntError(#[from] std::num::ParseIntError),
 }

@@ -97,7 +97,7 @@ mod tests {
         let path = "tests/**/*.md";
         let result = collect_paths(path).unwrap();
 
-        assert_eq!(result.len(), 1);
+        assert_eq!(result.len(), 2);
     }
 
     #[test]
