@@ -14,7 +14,7 @@ pub const DESCRIPTION: &str = "This is a blog";
 pub struct MarkdownPath(pub PathBuf);
 
 /// Converted HTML content from Markdown
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct HtmlBody(pub String);
 
 impl std::fmt::Display for HtmlBody {
@@ -23,6 +23,7 @@ impl std::fmt::Display for HtmlBody {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct Article {
     pub id: String,
     pub title: String,
@@ -44,8 +45,8 @@ pub fn curent_datetime() -> NaiveDate {
     NaiveDate::from_ymd(year, month, day)
 }
 
-pub fn created_datetime(path: PathBuf) -> Option<NaiveDate> {
-    let path_str = path.into_os_string().into_string().unwrap_or_default();
+pub fn created_datetime(path: &PathBuf) -> Option<NaiveDate> {
+    let path_str = path.as_path().display().to_string();
 
     parse_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
 }
@@ -96,7 +97,7 @@ mod tests {
     fn test_created_datetime() {
         let before = "tests/fixtures/2050_05_30.md";
         let path = PathBuf::from(before);
-        let result = created_datetime(path).unwrap();
+        let result = created_datetime(&path).unwrap();
         let expected_result = NaiveDate::from_ymd(2050, 05, 30);
 
         assert_eq!(result, expected_result);
