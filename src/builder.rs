@@ -38,7 +38,7 @@ pub fn build_articles() -> Result<(), ChabloError> {
 
 fn collect_articles() -> Result<Vec<Article>, ChabloError> {
     // Collect articles
-    let path = "diary/*.md";
+    let path = "diary/**/*.md";
     let mut paths: Vec<PathBuf> = collect_paths(path)?;
     paths.reverse();
     let mut articles: Vec<Article> = vec![];
@@ -51,7 +51,6 @@ fn collect_articles() -> Result<Vec<Article>, ChabloError> {
     Ok(articles)
 }
 
-// オーダーの変更
 fn collect_paths(path: &str) -> Result<Vec<PathBuf>, ChabloError> {
     let mut paths: Vec<PathBuf> = vec![];
 
@@ -86,8 +85,7 @@ mod tests {
 
     #[test]
     fn test_collect_article_ok() {
-        let path = "/diary/**/*.md";
-        let result = collect_paths(path);
+        let result = collect_articles();
 
         assert!(result.is_ok());
     }
@@ -97,7 +95,7 @@ mod tests {
         let path = "tests/**/*.md";
         let result = collect_paths(path).unwrap();
 
-        assert_eq!(result.len(), 2);
+        assert_eq!(result.len(), 1);
     }
 
     #[test]
