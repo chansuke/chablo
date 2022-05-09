@@ -85,7 +85,7 @@ mod tests {
 
     #[test]
     fn test_parse_ok() {
-        let path = PathBuf::from("./tests/fixtures/test.md");
+        let path = PathBuf::from("./tests/fixtures/2050_05_30.md");
         let result = parse(path);
 
         assert!(result.is_ok());

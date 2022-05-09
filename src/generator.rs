@@ -35,7 +35,7 @@ impl Generator<TopPage> for TopPage {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::models::HtmlBody;
+    use crate::models::{curent_datetime, HtmlBody};
 
     #[test]
     fn test_generate_article_ok() {
