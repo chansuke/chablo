@@ -46,7 +46,7 @@ pub fn curent_datetime() -> NaiveDate {
 }
 
 pub fn created_datetime(path: &Path) -> Option<NaiveDate> {
-    let path_str = path.display().to_string();
+    let path_str = path.to_string_lossy();
 
     // Convert extracted time
     extract_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
@@ -96,7 +96,7 @@ mod tests {
 
     #[test]
     fn test_created_datetime() {
-        let before = "tests/fixtures/2050_05_30.md";
+        let before = "tests/fixtures/2050/05/30.md";
         let path = PathBuf::from(before);
         let result = created_datetime(&path).unwrap();
         let expected_result = NaiveDate::from_ymd(2050, 05, 30);
