@@ -6,20 +6,17 @@ use anyhow::Result;
 use pulldown_cmark::{html, Options, Parser};
 
 use crate::errors::ChabloError;
-use crate::models::{created_datetime, curent_datetime, Article, HtmlBody};
+use crate::models::{created_datetime, Article, HtmlBody};
 
 pub fn parse(path: PathBuf) -> Result<Article, ChabloError> {
     // Extract the content of a markdown file
-    let file_path = path.clone();
-    let content = fs::read_to_string(path)?;
+    let content = fs::read_to_string(&path)?;
+    let created_time = created_datetime(&path).unwrap();
     let title = extract_title(&content)?;
     let body = extract_body(&content)?;
     let html_body = convert_md_to_html(body)?;
-    let current_date = curent_datetime();
-    let date_time = current_date.format("%Y-%m-%d").to_string();
-    let id = format!("{}_{}", date_time, title);
+    let id = format!("{}_{}", &created_time, title);
     let path = format!("{}{}", &title, ".html");
-    let created_time = created_datetime(file_path).unwrap();
 
     let article = Article {
         id,
@@ -80,6 +77,7 @@ fn extract_body(content: &str) -> Result<&str, ChabloError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::models::HtmlBody;
     use pretty_assertions::assert_eq;
     use std::path::PathBuf;
 
@@ -89,6 +87,27 @@ mod tests {
         let result = parse(path);
 
         assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_parse_with_path() {
+        let path = PathBuf::from("./tests/fixtures/2050_05_30.md");
+        let created_time = created_datetime(&path).unwrap();
+        let result = parse(path).unwrap();
+
+        let html = "<p>本文はありません。</p>\n".to_string();
+        let html_body = HtmlBody(html);
+        let path = format!("{}{}", "タイトル無し", ".html");
+
+        let article = Article {
+            id: "2050-05-30_タイトル無し".to_string(),
+            title: "タイトル無し".to_string(),
+            body: html_body,
+            date: created_time,
+            path,
+        };
+
+        assert_eq!(result, article);
     }
 
     #[test]
