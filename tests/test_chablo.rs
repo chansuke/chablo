@@ -19,7 +19,7 @@ fn test_chablo_error() -> Result<(), Box<dyn Error>> {
     bin.arg("buildddd_");
 
     let msg = if cfg!(windows) {
-        "The subcommand \'buildddd_\' wasn\'t recognized\n\n\tDid you mean \'build\'?\n\nIf you believe you received this message in error, try re-running with \'chablo.exe -- buildddd_\'\n\nUSAGE:\n    chablo <SUBCOMMAND>\n\nFor more information try --help\n"
+        "The subcommand \'buildddd_\' wasn\'t recognized\n\n\tDid you mean \'build\'?\n\nIf you believe you received this message in error, try re-running with \'chablo.exe -- buildddd_\'\n\nUSAGE:\n    chablo.exe <SUBCOMMAND>\n\nFor more information try --help\n"
     } else {
         "The subcommand \'buildddd_\' wasn\'t recognized\n\n\tDid you mean \'build\'?\n\nIf you believe you received this message in error, try re-running with \'chablo -- buildddd_\'\n\nUSAGE:\n    chablo <SUBCOMMAND>\n\nFor more information try --help\n"
     };
