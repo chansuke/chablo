@@ -1,5 +1,5 @@
 //! Models for chablo
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use askama::Template;
 use chrono::{Datelike, Local, NaiveDate};
@@ -45,13 +45,14 @@ pub fn curent_datetime() -> NaiveDate {
     NaiveDate::from_ymd(year, month, day)
 }
 
-pub fn created_datetime(path: &PathBuf) -> Option<NaiveDate> {
-    let path_str = path.as_path().display().to_string();
+pub fn created_datetime(path: &Path) -> Option<NaiveDate> {
+    let path_str = path.display().to_string();
 
-    parse_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
+    // Convert extracted time
+    extract_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
 }
 
-fn parse_time(path_str: &str) -> Option<Vec<i32>> {
+fn extract_time(path_str: &str) -> Option<Vec<i32>> {
     let re_str = r#"\d{1,}"#;
     let re = Regex::new(re_str).unwrap();
     // Extract year, month, date
@@ -87,7 +88,7 @@ mod tests {
     #[test]
     fn test_parse_year() {
         let before = "tests/fixtures/2050_05_30.md";
-        let result = parse_time(before).unwrap();
+        let result = extract_time(before).unwrap();
         let expected_result = vec![2050, 05, 30];
 
         assert_eq!(result, expected_result);
