@@ -12,9 +12,12 @@ use crate::Generator;
 use crate::errors::ChabloError;
 
 pub fn build() -> Result<(), ChabloError> {
-    build_articles()?;
+    let path = "diary/**/*.md";
 
-    let articles = collect_articles()?;
+    // Prepare articles to build static website
+    let articles = collect_articles(path)?;
+    build_articles(articles.clone())?;
+
     let toppage = TopPage { articles };
     let template = toppage.generate()?;
 
@@ -24,9 +27,8 @@ pub fn build() -> Result<(), ChabloError> {
     Ok(())
 }
 
-pub fn build_articles() -> Result<(), ChabloError> {
-    let articles = collect_articles()?;
-
+// Build static htmls of an articles
+pub fn build_articles(articles: Vec<Article>) -> Result<(), ChabloError> {
     for article in articles {
         let path = "public/".to_string() + &article.title + ".html";
         let template = article.generate()?;
@@ -36,9 +38,7 @@ pub fn build_articles() -> Result<(), ChabloError> {
     Ok(())
 }
 
-fn collect_articles() -> Result<Vec<Article>, ChabloError> {
-    // Collect articles
-    let path = "diary/**/*.md";
+fn collect_articles(path: &str) -> Result<Vec<Article>, ChabloError> {
     let mut paths: Vec<PathBuf> = collect_paths(path)?;
     paths.reverse();
     let mut articles: Vec<Article> = vec![];
@@ -78,14 +78,17 @@ mod tests {
 
     #[test]
     fn test_articles_ok() {
-        let result = build_articles();
+        let path = "tests/fixtures/2050_05_30.md";
+        let articles = collect_articles(path).unwrap();
+        let result = build_articles(articles);
 
         assert!(result.is_ok());
     }
 
     #[test]
     fn test_collect_article_ok() {
-        let result = collect_articles();
+        let path = "tests/fixtures/2050_05_30.md";
+        let result = collect_articles(path);
 
         assert!(result.is_ok());
     }
