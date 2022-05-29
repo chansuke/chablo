@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+date=$(date '+%Y/%m/%d')
+filename="diary/$date.md"
+
+if [ ! -f $filename ]
+then
+    cp "${PWD}/diary/template.md" $filename
+    vim $filename
+else
+    echo "File already exists"
+fi
