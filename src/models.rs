@@ -14,7 +14,7 @@ pub const DESCRIPTION: &str = "This is a blog";
 pub struct MarkdownPath(pub PathBuf);
 
 /// Converted HTML content from Markdown
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HtmlBody(pub String);
 
 impl std::fmt::Display for HtmlBody {
@@ -23,7 +23,7 @@ impl std::fmt::Display for HtmlBody {
     }
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Article {
     pub id: String,
     pub title: String,
