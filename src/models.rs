@@ -89,7 +89,7 @@ mod tests {
     fn test_parse_year() {
         let before = "tests/fixtures/2050_05_30.md";
         let result = extract_time(before).unwrap();
-        let expected_result = vec![2050, 05, 30];
+        let expected_result = vec![2050, 0o5, 30];
 
         assert_eq!(result, expected_result);
     }
@@ -99,7 +99,7 @@ mod tests {
         let before = "tests/fixtures/2050/05/30.md";
         let path = PathBuf::from(before);
         let result = created_datetime(&path).unwrap();
-        let expected_result = NaiveDate::from_ymd(2050, 05, 30);
+        let expected_result = NaiveDate::from_ymd(2050, 0o5, 30);
 
         assert_eq!(result, expected_result);
     }
