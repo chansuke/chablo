@@ -5,7 +5,7 @@ filename="diary/$date.md"
 
 if [ ! -f $filename ]
 then
-    cp "${PWD}/diary/template.md" $filename
+    cp "${PWD}/scripts/template.md" $filename
     vim $filename
 else
     echo "File already exists"
