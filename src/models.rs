@@ -5,8 +5,8 @@ use askama::Template;
 use chrono::{Datelike, Local, NaiveDate};
 use regex::Regex;
 
-pub const BLOG_TITLE: &str = "chansuke.net";
-pub const SUB_TITLE: &str = "Some notable things about my life";
+pub const BLOG_TITLE: &str = "blog.chansuke.info";
+pub const SUB_TITLE: &str = "日記、メモ、個人開発、生活の記録";
 pub const DESCRIPTION: &str = "This is a blog";
 
 /// Markdown file path
