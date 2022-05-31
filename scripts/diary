@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 
+
+year=$(date '+%Y')
+month=$(date '+%Y/%m')
 date=$(date '+%Y/%m/%d')
+
+yeardir="diary/$year/"
+monthdir="diary/$month/"
 filename="diary/$date.md"
+
 
 if [ ! -f $filename ]
 then
-    cp "${PWD}/diary/template.md" $filename
+    mkdir -p $monthdir
+    cp "${PWD}/scripts/template.md" $filename
     vim $filename
 else
     echo "File already exists"
