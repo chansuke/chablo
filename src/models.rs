@@ -6,8 +6,7 @@ use chrono::{Datelike, Local, NaiveDate};
 use regex::Regex;
 
 pub const BLOG_TITLE: &str = "blog.chansuke.info";
-pub const SUB_TITLE: &str = "日記、メモ、個人開発、生活の記録";
-pub const DESCRIPTION: &str = "This is a blog";
+pub const DESCRIPTION: &str = "日記、メモ、個人開発、生活の記録";
 
 /// Markdown file path
 #[derive(Debug)]

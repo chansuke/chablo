@@ -1,7 +1,7 @@
 use anyhow::Result;
 use askama::Template;
 
-use crate::models::{Article, ArticleTemplate, TopPage, TopPageTemplate, DESCRIPTION, SUB_TITLE};
+use crate::models::{Article, ArticleTemplate, TopPage, TopPageTemplate, BLOG_TITLE, DESCRIPTION};
 
 pub trait Generator<T> {
     fn generate(self) -> Result<String, askama::Error>;
@@ -23,7 +23,7 @@ impl Generator<Article> for Article {
 impl Generator<TopPage> for TopPage {
     fn generate(self) -> Result<String, askama::Error> {
         let result = TopPageTemplate {
-            title: SUB_TITLE,
+            title: BLOG_TITLE,
             articles: self.articles,
             description: DESCRIPTION,
         };
