@@ -57,7 +57,7 @@ fn collect_paths(path: &str) -> Result<Vec<PathBuf>, ChabloError> {
     for entry in glob(path)? {
         match entry {
             Ok(path) => paths.push(path),
-            Err(e) => eprintln!("Failed to execute event {:?}", e),
+            Err(e) => eprintln!("Failed to execute event {e:?}"),
         }
     }
 

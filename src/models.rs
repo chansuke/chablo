@@ -41,14 +41,17 @@ pub fn curent_datetime() -> NaiveDate {
     let month = local_time.date().month();
     let day = local_time.date().day();
 
-    NaiveDate::from_ymd(year, month, day)
+    NaiveDate::from_ymd_opt(year, month, day).unwrap_or_default()
 }
 
 pub fn created_datetime(path: &Path) -> Option<NaiveDate> {
     let path_str = path.to_string_lossy();
 
     // Convert extracted time
-    extract_time(&path_str).map(|date| NaiveDate::from_ymd(date[0], date[1] as u32, date[2] as u32))
+    extract_time(&path_str).map(|date| {
+        NaiveDate::from_ymd_opt(date[0], date[1] as u32, date[2] as u32)
+            .unwrap_or_else(curent_datetime)
+    })
 }
 
 fn extract_time(path_str: &str) -> Option<Vec<i32>> {
@@ -98,7 +101,7 @@ mod tests {
         let before = "tests/fixtures/2050/05/30.md";
         let path = PathBuf::from(before);
         let result = created_datetime(&path).unwrap();
-        let expected_result = NaiveDate::from_ymd(2050, 0o5, 30);
+        let expected_result = NaiveDate::from_ymd_opt(2050, 0o5, 30).unwrap();
 
         assert_eq!(result, expected_result);
     }

@@ -32,7 +32,7 @@ mod tests {
 
         assert_eq!(result, expected_result);
 
-        fs::remove_file(&path).unwrap();
+        fs::remove_file(path).unwrap();
     }
 
     #[test]
@@ -46,6 +46,6 @@ mod tests {
 
         assert!(metadata.is_file());
 
-        fs::remove_file(&path).unwrap();
+        fs::remove_file(path).unwrap();
     }
 }
