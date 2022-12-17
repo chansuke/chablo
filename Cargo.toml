@@ -11,7 +11,7 @@ anyhow = "1.0.57"
 thiserror = "1.0.31"
 clap = { version = "3.1.6", features = ["derive", "wrap_help"]  }
 askama = "0.10"
-chrono = { version = "0.4.19", features = ["serde"]  }
+chrono = { version = "0.4.23", features = ["serde"]  }
 glob = "0.3.0"
 regex = "1"
 
