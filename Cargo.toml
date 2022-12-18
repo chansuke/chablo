@@ -19,7 +19,7 @@ regex = "1"
 pretty_assertions = "1.2.1"
 insta = "1.14.0"
 assert_cmd = "2.0.7"
-predicates = "2.1.1"
+predicates = "2.1.4"
 
 [[bin]]
 bench = false
