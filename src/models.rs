@@ -35,6 +35,9 @@ pub struct TopPage {
     pub articles: Vec<Article>,
 }
 
+#[derive(Debug, Eq, PartialEq)]
+pub struct UpdatedTitle(pub String);
+
 pub fn curent_datetime() -> NaiveDate {
     let local_time = Local::now().naive_local();
     let year = local_time.date().year();
