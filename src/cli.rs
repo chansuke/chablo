@@ -14,7 +14,7 @@ pub struct ChabloOpt {
 pub enum Commands {
     /// Convert markdown to html
     Convert {
-        #[clap(long, short, parse(from_os_str))]
+        #[clap(long, short)]
         file: PathBuf,
     },
     /// Build the blog
