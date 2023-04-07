@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use anyhow::Result;
 use glob::glob;
 
-use crate::models::{Article, TopPage};
+use crate::models::{Article, TopPage, UpdatedTitle};
 use crate::parser::parse;
 use crate::writer::write;
 use crate::Generator;
@@ -17,7 +17,6 @@ pub fn build() -> Result<(), ChabloError> {
     // Prepare articles to build static website
     let articles = collect_articles(path)?;
     build_articles(articles.clone())?;
-
     let toppage = TopPage { articles };
     let template = toppage.generate()?;
 
@@ -30,8 +29,14 @@ pub fn build() -> Result<(), ChabloError> {
 // Build static htmls of an articles
 pub fn build_articles(articles: Vec<Article>) -> Result<(), ChabloError> {
     for article in articles {
-        let path = "public/".to_string() + &article.title + ".html";
+        let path = if article.title.contains("/") {
+            let removed_title = remove_slashes(&article.title);
+            "public/".to_string() + &removed_title.0 + ".html"
+        } else {
+            "public/".to_string() + &article.title + ".html"
+        };
         let template = article.generate()?;
+
         write(&template, &path)?;
     }
 
@@ -62,6 +67,10 @@ fn collect_paths(path: &str) -> Result<Vec<PathBuf>, ChabloError> {
     }
 
     Ok(paths)
+}
+
+fn remove_slashes(title: &str) -> UpdatedTitle {
+    UpdatedTitle(title.replace("/", ""))
 }
 
 #[cfg(test)]
@@ -116,5 +125,13 @@ mod tests {
         let result = collect_paths(path);
 
         assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_remove_slashes() {
+        let title = "2023/01/01";
+        let result = remove_slashes(title);
+
+        assert_eq!(result, UpdatedTitle("20230101".to_owned()));
     }
 }
