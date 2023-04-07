@@ -29,7 +29,7 @@ pub fn build() -> Result<(), ChabloError> {
 // Build static htmls of an articles
 pub fn build_articles(articles: Vec<Article>) -> Result<(), ChabloError> {
     for article in articles {
-        let path = if article.title.contains("/") {
+        let path = if article.title.contains('/') {
             let removed_title = remove_slashes(&article.title);
             "public/".to_string() + &removed_title.0 + ".html"
         } else {
@@ -70,7 +70,7 @@ fn collect_paths(path: &str) -> Result<Vec<PathBuf>, ChabloError> {
 }
 
 fn remove_slashes(title: &str) -> UpdatedTitle {
-    UpdatedTitle(title.replace("/", ""))
+    UpdatedTitle(title.replace('/', ""))
 }
 
 #[cfg(test)]
