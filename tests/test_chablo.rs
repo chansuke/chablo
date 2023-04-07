@@ -16,13 +16,9 @@ fn test_chablo_ok() -> Result<(), Box<dyn Error>> {
 #[test]
 fn test_chablo_error() -> Result<(), Box<dyn Error>> {
     let mut bin = bin();
-    bin.arg("buildddd_");
+    bin.arg("unknown_command");
 
-    let msg = if cfg!(windows) {
-        "The subcommand \'buildddd_\' wasn\'t recognized\n\n\tDid you mean \'build\'?\n\nIf you believe you received this message in error, try re-running with \'chablo.exe -- buildddd_\'\n\nUSAGE:\n    chablo.exe <SUBCOMMAND>\n\nFor more information try --help\n"
-    } else {
-        "The subcommand \'buildddd_\' wasn\'t recognized\n\n\tDid you mean \'build\'?\n\nIf you believe you received this message in error, try re-running with \'chablo -- buildddd_\'\n\nUSAGE:\n    chablo <SUBCOMMAND>\n\nFor more information try --help\n"
-    };
+    let msg = "error: unrecognized subcommand 'unknown_command'\n\nUsage: chablo <COMMAND>\n\nFor more information, try '--help'.";
 
     bin.assert().failure().stderr(predicate::str::contains(msg));
     Ok(())
