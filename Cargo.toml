@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 pulldown-cmark = "0.9.3"
-anyhow = "1.0.72"
+anyhow = "1.0.75"
 thiserror = "1.0.44"
 clap = { version = "4.3.19", features = ["derive", "wrap_help"]  }
 askama = "0.12"
