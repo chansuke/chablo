@@ -58,7 +58,7 @@ pub fn created_datetime(path: &Path) -> Option<NaiveDate> {
 }
 
 fn extract_time(path_str: &str) -> Option<Vec<i32>> {
-    let re_str = r#"\d{1,}"#;
+    let re_str = r"\d{1,}";
     let re = Regex::new(re_str).unwrap();
     // Extract year, month, date
     let year_month_day = re
