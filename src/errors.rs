@@ -13,4 +13,6 @@ pub enum ChabloError {
     MatchError,
     #[error("Failed to parse Int: {0}")]
     ParseIntError(#[from] std::num::ParseIntError),
+    #[error("Failed to extract the title")]
+    ExtractTitleError,
 }

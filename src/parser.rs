@@ -46,12 +46,17 @@ fn convert_md_to_html(md: &str) -> Result<HtmlBody, ChabloError> {
 }
 
 /// Extract title from raw-content
-fn extract_title(content: &str) -> Result<&str, ChabloError> {
-    let v: Vec<&str> = content.split("---").collect();
+fn extract_title(content: &str) -> Result<String, ChabloError> {
+    let parts: Vec<&str> = content.split("---").collect();
 
-    match v.len() == 1 {
-        true => Ok("タイトル無し"),
-        false => Ok((v[1].split("title:").collect::<Vec<&str>>())[1].trim()),
+    if parts.len() < 2 {
+        return Ok("タイトル無し".to_string());
+    }
+    if let Some(title_part) = parts[1].split("title:").nth(1) {
+        let title = title_part.trim().replace('/', "");
+        Ok(title)
+    } else {
+        Err(ChabloError::ExtractTitleError)
     }
 }
 
