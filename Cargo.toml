@@ -17,7 +17,7 @@ regex = "1"
 
 [dev-dependencies]
 pretty_assertions = "1.4.0"
-insta = "1.31.0"
+insta = "1.33.0"
 assert_cmd = "2.0.12"
 predicates = "3.0.4"
 
