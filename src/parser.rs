@@ -53,7 +53,7 @@ fn extract_title(content: &str) -> Result<String, ChabloError> {
         return Ok("タイトル無し".to_string());
     }
     if let Some(title_part) = parts[1].split("title:").nth(1) {
-        let title = title_part.trim().replace('/', "");
+        let title = title_part.trim().replace('/', "-");
         Ok(title)
     } else {
         Err(ChabloError::ExtractTitleError)
