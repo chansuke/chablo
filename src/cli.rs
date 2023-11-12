@@ -18,7 +18,10 @@ pub enum Commands {
         file: PathBuf,
     },
     /// Build the blog
-    Build {},
+    Build,
+
+    /// Run the server
+    Serve,
 }
 
 impl ChabloOpt {
