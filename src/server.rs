@@ -3,6 +3,8 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::net::{TcpListener, TcpStream};
 
+use log::{error, info};
+
 use crate::errors::ChabloError;
 
 pub fn run() -> Result<(), ChabloError> {
@@ -13,11 +15,11 @@ pub fn run() -> Result<(), ChabloError> {
         match stream {
             Ok(stream) => {
                 if let Err(e) = handle_connection(stream) {
-                    eprintln!("error: {}", e)
+                    error!("error: {}", e)
                 }
             }
             Err(e) => {
-                eprintln!("error: {}", e)
+                error!("error: {}", e)
             }
         }
     }
@@ -28,6 +30,7 @@ pub fn run() -> Result<(), ChabloError> {
 fn handle_connection(mut stream: TcpStream) -> Result<(), ChabloError> {
     let mut buffer = [0; 1024];
     stream.read(&mut buffer)?;
+    info!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 
     let get = b"GET / HTTP/1.1\r\n";
 
