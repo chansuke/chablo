@@ -8,8 +8,10 @@ use log::{error, info};
 
 use crate::errors::ChabloError;
 
-pub fn run() -> Result<(), ChabloError> {
-    let listener = TcpListener::bind("127.0.0.1:8080")?;
+pub fn serve() -> Result<(), ChabloError> {
+    let address = "127.0.0.1:8080";
+    info!("Listening on {}", address);
+    let listener = TcpListener::bind(address)?;
 
     // accept connections and process them serially
     for stream in listener.incoming() {
