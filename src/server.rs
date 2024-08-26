@@ -1,10 +1,10 @@
 //! http server
 use std::fs::File;
-use std::io::prelude::*;
+use std::io::{prelude::*, Read};
 use std::net::{TcpListener, TcpStream};
 use std::path::Path;
 
-use log::{error, info};
+use log::{error, info, warn};
 
 use crate::errors::ChabloError;
 
@@ -38,8 +38,15 @@ pub fn serve() -> Result<(), ChabloError> {
 
 fn handle_connection(mut stream: TcpStream) -> Result<(), ChabloError> {
     let mut buffer = [0; 1024];
-    stream.read(&mut buffer)?;
-    info!("Request: {}", String::from_utf8_lossy(&buffer[..]));
+    let bytes_read = stream.read(&mut buffer)?;
+    if bytes_read > 0 {
+        info!(
+            "Request: {}",
+            String::from_utf8_lossy(&buffer[..bytes_read])
+        );
+    } else {
+        warn!("No data received from the stream.");
+    }
 
     // Parse the request
     let binding = String::from_utf8_lossy(&buffer[..]);
@@ -71,7 +78,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), ChabloError> {
 
     let response = format!("{}{}", status_line, contents);
 
-    stream.write(response.as_bytes())?;
+    stream.write_all(response.as_bytes())?;
     stream.flush()?;
 
     Ok(())
