@@ -9,9 +9,15 @@ use log::{error, info};
 use crate::errors::ChabloError;
 
 pub fn serve() -> Result<(), ChabloError> {
-    let address = "127.0.0.1:8080";
-    info!("Listening on {}", address);
+    let address = "localhost:8080";
     let listener = TcpListener::bind(address)?;
+
+    let url = format!("http://{}", address);
+
+    let blue_color = "\x1b[34m";
+    let reset_color = "\x1b[0m";
+    println!("Listening on: {}{}{}", blue_color, url, reset_color);
+    info!("Listening on: {}", url);
 
     // accept connections and process them serially
     for stream in listener.incoming() {
