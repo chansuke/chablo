@@ -1,6 +1,6 @@
 //! http server
 use std::fs::File;
-use std::io::prelude::*;
+use std::io::{prelude::*, Read};
 use std::net::{TcpListener, TcpStream};
 use std::path::Path;
 
@@ -71,7 +71,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), ChabloError> {
 
     let response = format!("{}{}", status_line, contents);
 
-    stream.write(response.as_bytes())?;
+    stream.write_all(response.as_bytes())?;
     stream.flush()?;
 
     Ok(())
