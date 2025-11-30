@@ -1,0 +1,22 @@
+name: Check Minimal Versions
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  minimal-versions:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install nightly toolchain
+      run: |
+        rustup update --no-self-update nightly
+        rustup default nightly
+    - name: Cargo update (minimal versions)
+      run: cargo +nightly update -Z minimal-versions
+    - name: Cargo check
+      run: cargo check
+    - name: Cargo test
+      run: cargo test
