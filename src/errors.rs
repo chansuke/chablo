@@ -15,4 +15,6 @@ pub enum ChabloError {
     ParseIntError(#[from] std::num::ParseIntError),
     #[error("Failed to extract the title")]
     ExtractTitleError,
+    #[error("Invalid percent-encoded sequence")]
+    InvalidPercentEncoding,
 }
